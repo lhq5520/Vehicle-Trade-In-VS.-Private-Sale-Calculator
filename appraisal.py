@@ -2,10 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 import requests
+from PIL import Image, ImageTk
 
 def fetch_live_exchange_rates():
     api_key = 'de13d0be666eaf67b6ab0982'  # Replace with your ExchangeRate-API key
-    url = f"https://v6.exchangerate-api.com/v6/de13d0be666eaf67b6ab0982/latest/CAD"
+    url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/CAD"
     
     try:
         response = requests.get(url)
@@ -66,6 +67,9 @@ def calculate_financial_loss():
         loss_private_sale_rmb = loss_private_sale_cad * exchange_rate_rmb
         loss_private_sale_usd = loss_private_sale_cad * exchange_rate_usd
 
+        # Calculate equilibrium private sale value
+        equilibrium_private_sale_value_cad = total_new_car_private_sale_cad - financial_loss_trade_in_cad
+
         # Create DataFrames to display the results
         trade_in_data = {
             "Description": ["Original Purchase Price of Car", "Original Tax", "Total Original Cost", "Trade-in Value", "New Car Price", "Tax Credit for Trade-in", "New Car Tax (After Trade-in Credit)", "Dealer Fee", "Total New Car Cost", "Financial Loss (Trade-in)", "Loss from Trade-in"],
@@ -81,20 +85,29 @@ def calculate_financial_loss():
             "Amount (in USD)": [original_price_cad * exchange_rate_usd, original_tax_cad * exchange_rate_usd, total_original_cost_cad * exchange_rate_usd, private_sale_value_cad * exchange_rate_usd, new_car_price_cad * exchange_rate_usd, tax_new_car_private_sale_cad * exchange_rate_usd, dealer_fee_cad * exchange_rate_usd, total_new_car_private_sale_cad * exchange_rate_usd, financial_loss_private_sale_usd, loss_private_sale_usd]
         }
 
+        equilibrium_data = {
+            "Description": ["Equilibrium Private Sale Value"],
+            "Amount (in CAD$)": [equilibrium_private_sale_value_cad],
+            "Amount (in RMB)": [equilibrium_private_sale_value_cad * exchange_rate_rmb],
+            "Amount (in USD)": [equilibrium_private_sale_value_cad * exchange_rate_usd]
+        }
+
         trade_in_df = pd.DataFrame(trade_in_data)
         private_sale_df = pd.DataFrame(private_sale_data)
+        equilibrium_df = pd.DataFrame(equilibrium_data)
 
-        display_results(trade_in_df, private_sale_df)
+        display_results(trade_in_df, private_sale_df, equilibrium_df)
     except ValueError:
         result_label.config(text="Please enter valid numbers.")
 
-def display_results(trade_in_df, private_sale_df):
+def display_results(trade_in_df, private_sale_df, equilibrium_df):
     # Convert DataFrames to string
     trade_in_text = trade_in_df.to_string(index=False)
     private_sale_text = private_sale_df.to_string(index=False)
+    equilibrium_text = equilibrium_df.to_string(index=False)
 
     # Combine the text results with extra space
-    result_text = f"Trade-in Options:\n{trade_in_text}\n\n\n\nPrivate Sale Options:\n{private_sale_text}"
+    result_text = f"Trade-in Options:\n{trade_in_text}\n\n\n\nPrivate Sale Options:\n{private_sale_text}\n\n\n\nTrade-in - Private Sale Equilibrium:\n{equilibrium_text}"
 
     # Enable text widget, insert the result text, then disable it
     result_text_widget.configure(state='normal')
@@ -107,7 +120,7 @@ def display_results(trade_in_df, private_sale_df):
     colorize_columns(result_text_widget, ["Amount (in CAD$)"], "green", 10)
     colorize_columns(result_text_widget, ["Amount (in RMB)"], "red", 10)
     colorize_columns(result_text_widget, ["Amount (in USD)"], "orange", 10)
-    colorize_text(result_text_widget, ["Trade-in Options:", "Private Sale Options:"], "purple", 14)
+    colorize_text(result_text_widget, ["Trade-in Options:", "Private Sale Options:", "Trade-in - Private Sale Equilibrium:"], "purple", 14)
     result_text_widget.configure(state='disabled')
 
     # Adjust height of the text widget to fit content
@@ -150,36 +163,44 @@ def colorize_text(text_widget, texts, color, font_size):
 root = tk.Tk()
 root.title("Financial Loss Calculator")
 
+# Load images
+original_price_img = ImageTk.PhotoImage(Image.open("original_price.png").resize((20, 20)))
+trade_in_value_img = ImageTk.PhotoImage(Image.open("trade_in_value.png").resize((20, 20)))
+private_sale_value_img = ImageTk.PhotoImage(Image.open("private_sale_value.png").resize((20, 20)))
+new_car_price_img = ImageTk.PhotoImage(Image.open("new_car_price.png").resize((20, 20)))
+tax_rate_img = ImageTk.PhotoImage(Image.open("tax_rate.png").resize((20, 20)))
+dealer_fee_img = ImageTk.PhotoImage(Image.open("dealer_fee.png").resize((20, 20)))
+
 # Create and place the widgets
-ttk.Label(root, text="Original Purchase Price (CAD$):").grid(column=0, row=0, padx=10, pady=5)
+ttk.Label(root, text="Original Purchase Price (CAD$):", image=original_price_img, compound="left").grid(column=0, row=0, padx=10, pady=5)
 entry_original_price = ttk.Entry(root)
 entry_original_price.grid(column=1, row=0, padx=10, pady=5)
 entry_original_price.insert(0, "29500")  # Set default value
 
-ttk.Label(root, text="Trade-in Value (CAD$):").grid(column=0, row=1, padx=10, pady=5)
+ttk.Label(root, text="Trade-in Value (CAD$):", image=trade_in_value_img, compound="left").grid(column=0, row=1, padx=10, pady=5)
 entry_trade_in_value = ttk.Entry(root)
 entry_trade_in_value.grid(column=1, row=1, padx=10, pady=5)
 entry_trade_in_value.insert(0, "24000")  # Set default value
 
-ttk.Label(root, text="Private Sale Value (CAD$):").grid(column=0, row=2, padx=10, pady=5)
+ttk.Label(root, text="Private Sale Value (CAD$):", image=private_sale_value_img, compound="left").grid(column=0, row=2, padx=10, pady=5)
 entry_private_sale_value = ttk.Entry(root)
 entry_private_sale_value.grid(column=1, row=2, padx=10, pady=5)
-entry_private_sale_value.insert(0, "28000")  # Set default value
+entry_private_sale_value.insert(0, "26000")  # Set default value
 
-ttk.Label(root, text="New Car Price (CAD$):").grid(column=0, row=3, padx=10, pady=5)
+ttk.Label(root, text="New Car Price (CAD$):", image=new_car_price_img, compound="left").grid(column=0, row=3, padx=10, pady=5)
 entry_new_car_price = ttk.Entry(root)
 entry_new_car_price.grid(column=1, row=3, padx=10, pady=5)
 entry_new_car_price.insert(0, "36500")  # Set default value
 
-ttk.Label(root, text="Tax Rate (%):").grid(column=0, row=4, padx=10, pady=5)
+ttk.Label(root, text="Tax Rate (%):", image=tax_rate_img, compound="left").grid(column=0, row=4, padx=10, pady=5)
 entry_tax_rate = ttk.Entry(root)
 entry_tax_rate.grid(column=1, row=4, padx=10, pady=5)
 entry_tax_rate.insert(0, "12")  # Set default value
 
-ttk.Label(root, text="Dealer Fee (CAD$):").grid(column=0, row=5, padx=10, pady=5)
+ttk.Label(root, text="Dealer Fee (CAD$):", image=dealer_fee_img, compound="left").grid(column=0, row=5, padx=10, pady=5)
 entry_dealer_fee = ttk.Entry(root)
 entry_dealer_fee.grid(column=1, row=5, padx=10, pady=5)
-entry_dealer_fee.insert(0, "1000")  # Set default value
+entry_dealer_fee.insert(0, "500")  # Set default value
 
 calculate_button = ttk.Button(root, text="Calculate", command=calculate_financial_loss)
 calculate_button.grid(column=0, row=6, columnspan=2, pady=10)
@@ -198,4 +219,3 @@ root.grid_columnconfigure(1, weight=1)
 
 # Start the GUI event loop
 root.mainloop()
-
