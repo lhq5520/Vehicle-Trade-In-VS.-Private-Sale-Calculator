@@ -72,17 +72,17 @@ def calculate_financial_loss():
 
         # Create DataFrames to display the results
         trade_in_data = {
-            "Description": ["🚗 Original Purchase Price of Car", "💸 Original Tax", "📊 Total Original Cost", "🔄 Trade-in Value", "🚘 New Car Price", "💰 Tax Credit for Trade-in", "💸 New Car Tax (After Trade-in Credit)", "📜 Dealer Fee", "📈 Total New Car Cost", "❗ Financial Loss (Trade-in)", "❗ Loss from Trade-in"],
-            "Amount (CAD$)": [f"{original_price_cad}", f"{original_tax_cad}", f"{total_original_cost_cad}", f"{trade_in_value_cad}", f"{new_car_price_cad}", f"{tax_credit_cad}", f"{tax_new_car_trade_in_cad}", f"{dealer_fee_cad}", f"{total_new_car_trade_in_cad}", f"{financial_loss_trade_in_cad}", f"{loss_trade_in_cad}"],
-            "Amount (RMB)": [f"¥{round(original_price_cad * exchange_rate_rmb)}", f"¥{round(original_tax_cad * exchange_rate_rmb)}", f"¥{round(total_original_cost_cad * exchange_rate_rmb)}", f"¥{round(trade_in_value_cad * exchange_rate_rmb)}", f"¥{round(new_car_price_cad * exchange_rate_rmb)}", f"¥{round(tax_credit_cad * exchange_rate_rmb)}", f"¥{round(tax_new_car_trade_in_cad * exchange_rate_rmb)}", f"¥{round(dealer_fee_cad * exchange_rate_rmb)}", f"¥{round(total_new_car_trade_in_cad * exchange_rate_rmb)}", f"¥{financial_loss_trade_in_rmb}", f"¥{loss_trade_in_rmb}"],
-            "Amount (USD)": [f"${round(original_price_cad * exchange_rate_usd)}", f"${round(original_tax_cad * exchange_rate_usd)}", f"${round(total_original_cost_cad * exchange_rate_usd)}", f"${round(trade_in_value_cad * exchange_rate_usd)}", f"${round(new_car_price_cad * exchange_rate_usd)}", f"${round(tax_credit_cad * exchange_rate_usd)}", f"${round(tax_new_car_trade_in_cad * exchange_rate_usd)}", f"${round(dealer_fee_cad * exchange_rate_usd)}", f"${round(total_new_car_trade_in_cad * exchange_rate_usd)}", f"${financial_loss_trade_in_usd}", f"${loss_trade_in_usd}"]
+            "Description": ["🚗 Original Purchase Price of Car", "💸 Original Tax", "📊 Total Original Cost", "🚘 New Car Price", "💰 Tax Credit for Trade-in", "💸 New Car Tax (After Trade-in Credit)", "📜 Dealer Fee", "📈 Total New Car Cost", "❗ Financial Loss (Trade-in)", "❗ Loss from Trade-in"],
+            "Amount (CAD$)": [f"{original_price_cad}", f"{original_tax_cad}", f"{total_original_cost_cad}", f"{new_car_price_cad}", f"{tax_credit_cad}", f"{tax_new_car_trade_in_cad}", f"{dealer_fee_cad}", f"{total_new_car_trade_in_cad}", f"{financial_loss_trade_in_cad}", f"{loss_trade_in_cad}"],
+            "Amount (RMB)": [f"¥{round(original_price_cad * exchange_rate_rmb)}", f"¥{round(original_tax_cad * exchange_rate_rmb)}", f"¥{round(total_original_cost_cad * exchange_rate_rmb)}", f"¥{round(new_car_price_cad * exchange_rate_rmb)}", f"¥{round(tax_credit_cad * exchange_rate_rmb)}", f"¥{round(tax_new_car_trade_in_cad * exchange_rate_rmb)}", f"¥{round(dealer_fee_cad * exchange_rate_rmb)}", f"¥{round(total_new_car_trade_in_cad * exchange_rate_rmb)}", f"¥{financial_loss_trade_in_rmb}", f"¥{loss_trade_in_rmb}"],
+            "Amount (USD)": [f"${round(original_price_cad * exchange_rate_usd)}", f"${round(original_tax_cad * exchange_rate_usd)}", f"${round(total_original_cost_cad * exchange_rate_usd)}", f"${round(new_car_price_cad * exchange_rate_usd)}", f"${round(tax_credit_cad * exchange_rate_usd)}", f"${round(tax_new_car_trade_in_cad * exchange_rate_usd)}", f"${round(dealer_fee_cad * exchange_rate_usd)}", f"${round(total_new_car_trade_in_cad * exchange_rate_usd)}", f"${financial_loss_trade_in_usd}", f"${loss_trade_in_usd}"]
         }
 
         private_sale_data = {
-            "Description": ["🚗 Original Purchase Price of Car", "💸 Original Tax", "📊 Total Original Cost", "💵 Private Sale Value", "🚘 New Car Price", "💸 New Car Tax", "📜 Dealer Fee", "📈 Total New Car Cost", "❗ Financial Loss (Private Sale)", "❗ Loss from Private Sale"],
-            "Amount (CAD$)": [f"{original_price_cad}", f"{original_tax_cad}", f"{total_original_cost_cad}", f"{private_sale_value_cad}", f"{new_car_price_cad}", f"{tax_new_car_private_sale_cad}", f"{dealer_fee_cad}", f"{total_new_car_private_sale_cad}", f"{financial_loss_private_sale_cad}", f"{loss_private_sale_cad}"],
-            "Amount (RMB)": [f"¥{round(original_price_cad * exchange_rate_rmb)}", f"¥{round(original_tax_cad * exchange_rate_rmb)}", f"¥{round(total_original_cost_cad * exchange_rate_rmb)}", f"¥{round(private_sale_value_cad * exchange_rate_rmb)}", f"¥{round(new_car_price_cad * exchange_rate_rmb)}", f"¥{round(tax_new_car_private_sale_cad * exchange_rate_rmb)}", f"¥{round(dealer_fee_cad * exchange_rate_rmb)}", f"¥{round(total_new_car_private_sale_cad * exchange_rate_rmb)}", f"¥{financial_loss_private_sale_rmb}", f"¥{loss_private_sale_rmb}"],
-            "Amount (USD)": [f"${round(original_price_cad * exchange_rate_usd)}", f"${round(original_tax_cad * exchange_rate_usd)}", f"${round(total_original_cost_cad * exchange_rate_usd)}", f"${round(private_sale_value_cad * exchange_rate_usd)}", f"${round(new_car_price_cad * exchange_rate_usd)}", f"${round(tax_new_car_private_sale_cad * exchange_rate_usd)}", f"${round(dealer_fee_cad * exchange_rate_usd)}", f"${round(total_new_car_private_sale_cad * exchange_rate_usd)}", f"${financial_loss_private_sale_usd}", f"${loss_private_sale_usd}"]
+            "Description": ["🚗 Original Purchase Price of Car", "💸 Original Tax", "📊 Total Original Cost", "🚘 New Car Price", "💸 New Car Tax", "📜 Dealer Fee", "📈 Total New Car Cost", "❗ Financial Loss (Private Sale)", "❗ Loss from Private Sale"],
+            "Amount (CAD$)": [f"{original_price_cad}", f"{original_tax_cad}", f"{total_original_cost_cad}", f"{new_car_price_cad}", f"{tax_new_car_private_sale_cad}", f"{dealer_fee_cad}", f"{total_new_car_private_sale_cad}", f"{financial_loss_private_sale_cad}", f"{loss_private_sale_cad}"],
+            "Amount (RMB)": [f"¥{round(original_price_cad * exchange_rate_rmb)}", f"¥{round(original_tax_cad * exchange_rate_rmb)}", f"¥{round(total_original_cost_cad * exchange_rate_rmb)}", f"¥{round(new_car_price_cad * exchange_rate_rmb)}", f"¥{round(tax_new_car_private_sale_cad * exchange_rate_rmb)}", f"¥{round(dealer_fee_cad * exchange_rate_rmb)}", f"¥{round(total_new_car_private_sale_cad * exchange_rate_rmb)}", f"¥{financial_loss_private_sale_rmb}", f"¥{loss_private_sale_rmb}"],
+            "Amount (USD)": [f"${round(original_price_cad * exchange_rate_usd)}", f"${round(original_tax_cad * exchange_rate_usd)}", f"${round(total_original_cost_cad * exchange_rate_usd)}", f"${round(new_car_price_cad * exchange_rate_usd)}", f"${round(tax_new_car_private_sale_cad * exchange_rate_usd)}", f"${round(dealer_fee_cad * exchange_rate_usd)}", f"${round(total_new_car_private_sale_cad * exchange_rate_usd)}", f"${financial_loss_private_sale_usd}", f"${loss_private_sale_usd}"]
         }
 
         equilibrium_data = {
@@ -96,11 +96,11 @@ def calculate_financial_loss():
         private_sale_df = pd.DataFrame(private_sale_data)
         equilibrium_df = pd.DataFrame(equilibrium_data)
 
-        show_results_window(trade_in_df, private_sale_df, equilibrium_df)
+        show_results_window(trade_in_df, private_sale_df, equilibrium_df, trade_in_value_cad, private_sale_value_cad)
     except ValueError:
         result_label.config(text="Please enter valid numbers.")
 
-def show_results_window(trade_in_df, private_sale_df, equilibrium_df):
+def show_results_window(trade_in_df, private_sale_df, equilibrium_df, trade_in_value, private_sale_value):
     # Close existing results window if it exists
     if hasattr(show_results_window, 'results_window') and show_results_window.results_window.winfo_exists():
         show_results_window.results_window.destroy()
@@ -116,23 +116,38 @@ def show_results_window(trade_in_df, private_sale_df, equilibrium_df):
 
     # Function to update the position of the results window
     def update_results_window_position(event):
-        if abs(root.winfo_x() + root.winfo_width() - results_window.winfo_x()) > 10 or abs(root.winfo_y() - results_window.winfo_y()) > 10:
-            x = root.winfo_x() + root.winfo_width()
-            y = root.winfo_y()
-            results_window.geometry(f"+{x}+{y}")
+        try:
+            if abs(root.winfo_x() + root.winfo_width() - results_window.winfo_x()) > 10 or abs(root.winfo_y() - results_window.winfo_y()) > 10:
+                x = root.winfo_x() + root.winfo_width()
+                y = root.winfo_y()
+                results_window.geometry(f"+{x}+{y}")
+        except tk.TclError:
+            pass
 
     def update_main_window_position(event):
-        if abs(results_window.winfo_x() - root.winfo_width() - root.winfo_x()) > 10 or abs(results_window.winfo_y() - root.winfo_y()) > 10:
-            x = results_window.winfo_x() - root.winfo_width()
-            y = results_window.winfo_y()
-            root.geometry(f"+{x}+{y}")
+        try:
+            if abs(results_window.winfo_x() - root.winfo_width() - root.winfo_x()) > 10 or abs(results_window.winfo_y() - root.winfo_y()) > 10:
+                x = results_window.winfo_x() - root.winfo_width()
+                y = results_window.winfo_y()
+                root.geometry(f"+{x}+{y}")
+        except tk.TclError:
+            pass
 
-    root.bind("<Configure>", update_results_window_position)
-    results_window.bind("<Configure>", update_main_window_position)
+    # Delay updating the positions to reduce frequency
+    root.bind("<Configure>", lambda event: root.after(100, update_results_window_position, event))
+    results_window.bind("<Configure>", lambda event: root.after(100, update_main_window_position, event))
 
     # Function to create a treeview for displaying the data
-    def create_treeview(data, title, height):
-        tree = ttk.Treeview(results_window, columns=("Description", "CAD", "RMB", "USD"), show="headings", height=height)
+    def create_treeview(data, title, value, image, height):
+        frame = ttk.Frame(results_window)
+        frame.pack(pady=5)
+
+        title_frame = ttk.Frame(frame)
+        title_frame.grid(row=0, column=0, columnspan=2)
+        title_label = ttk.Label(title_frame, text=f"{title}: ${value}", image=image, compound="left", font=("TkDefaultFont", 12, "bold"))
+        title_label.pack(pady=5)
+
+        tree = ttk.Treeview(frame, columns=("Description", "CAD", "RMB", "USD"), show="headings", height=height)
         tree.heading("Description", text="Description")
         tree.heading("CAD", text="Amount (in CAD$)")
         tree.heading("RMB", text="Amount (in RMB)")
@@ -153,11 +168,14 @@ def show_results_window(trade_in_df, private_sale_df, equilibrium_df):
                     tree.tag_configure("highlight", background="yellow")
                     tree.item(row, tags="highlight")
 
-        ttk.Label(results_window, text=title, font=("TkDefaultFont", 12, "bold")).pack(pady=5)
-        tree.pack(pady=5)
+        tree.grid(row=1, column=0, columnspan=2, pady=5)
 
-    create_treeview(trade_in_df.to_dict(), "Trade-in Options", height=11)
-    create_treeview(private_sale_df.to_dict(), "Private Sale Options", height=10)
+    # Load images for section titles
+    trade_in_img = ImageTk.PhotoImage(Image.open("trade_in_value.png").resize((20, 20)))
+    private_sale_img = ImageTk.PhotoImage(Image.open("private_sale_value.png").resize((20, 20)))
+
+    create_treeview(trade_in_df.to_dict(), "Trade-in Options", trade_in_value, trade_in_img, height=10)
+    create_treeview(private_sale_df.to_dict(), "Private Sale Options", private_sale_value, private_sale_img, height=9)
 
     equilibrium_text = f"Equilibrium Private Sale Value: {equilibrium_df['Amount (CAD$)'][0]}, {equilibrium_df['Amount (RMB)'][0]}, {equilibrium_df['Amount (USD)'][0]}"
     ttk.Label(results_window, text=equilibrium_text, font=("TkDefaultFont", 12, "bold")).pack(pady=5)
