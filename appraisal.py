@@ -165,7 +165,7 @@ def show_results_window(trade_in_df, private_sale_df, equilibrium_df, trade_in_v
             for row in tree.get_children():
                 value = tree.set(row, column)
                 if "Financial Loss" in tree.item(row, "values")[0] or "Loss from" in tree.item(row, "values")[0]:
-                    tree.tag_configure("highlight", background="yellow")
+                    tree.tag_configure("highlight", background="red")
                     tree.item(row, tags="highlight")
 
         tree.grid(row=1, column=0, columnspan=2, pady=5)
